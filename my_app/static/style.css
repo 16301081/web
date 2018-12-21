@@ -1,0 +1,58 @@
+html, body {
+    height: 100%;
+    width:100%;
+}
+
+.box{
+    display: flex;
+    height:100vh; 
+    flex-grow: 1;
+}
+
+.first,.second{
+    flex: 1;
+    height: 100%;
+}
+
+.first{    
+    background-image:url(https://gitlab.com/bjtu-yoann/web_development_2018/raw/master/session_3_extra/background.jpg); 
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.second{
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    background-color: #eeefe2;
+}
+
+.third{
+    display: flex;
+    flex-direction:column;
+    width: auto;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 2px rgba(10,10,10,.1);
+}
+
+.input{
+    line-height: 3em;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.but{
+    display:flex;
+    margin-left: 2em;
+    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 3px rgba(10,10,10,.1);
+}
+
+div.like{
+    cursor: pointer;
+    color: #032121;
+}
+div.like .active{
+    color: #ff210d;
+}

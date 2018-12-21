@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="/static/style1.css" rel='stylesheet' type='text/css' media="all" />
+    <script rel="javascript" src='/static/jquery.min.js'></script>
+    <script rel="javascript"  src="/static/judge.js"></script>
+</head>
+<body>
+<div class="form-w3ls">
+    <ul class="tab-group cl-effect-4">
+        <li class="tab"><a href="{% url 'login' %}">login</a></li>
+        <li class="tab active"><a href="#signup-agile">register</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="signup-agile">
+            <p id="error"></p>
+            {% if form.invalid %}
+                <p>{{ form.invalid }}</p>
+            {% endif %}
+            {{ invalid }}
+			<form action="#" method="post"  onsubmit="return judge()">
+                 {% csrf_token %}<br />
+				<p class="header">Email address</p>
+				<input type="text" name="email"   id="id_email" >
+
+                <p class="header">User Name</p>
+				<input type="text" name="username"   id="id_username" >
+
+				<p class="header">Password</p>
+				<input type="password" name="password"  id="id_password" >
+
+                <p class="header">password_confirmation</p>
+				<input type="password" name="password_confirmation" id="id_password_confirmation" >
+
+				<input type="submit" class="register" value="Register">
+
+			</form>
+		</div>
+		<div ></div>
+    </div>
+</div>
+
+</body>
+</html>

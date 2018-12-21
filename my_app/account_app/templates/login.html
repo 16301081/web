@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="/static/style1.css" rel='stylesheet' type='text/css' media="all" />
+    <script rel="javascript" src='/static/jquery.min.js'></script>
+    <script rel="javascript"  src="/static/judge.js"></script>
+</head>
+<body>
+<div class="form-w3ls">
+    <ul class="tab-group cl-effect-4">
+        <li class="tab active"><a href="#signin-agile">login</a></li>
+		<li class="tab"><a href="{% url 'register' %}">register</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="signin-agile">
+            <p id="error"></p>
+            {{ error }}
+			<form action="#" method="post"  onsubmit="return ljudge() ">
+                 {% csrf_token %}<br />
+				<p class="header">Email address/User name</p>
+				<input type="text" name="username"   id="lemail" >
+
+				<p class="header">Password</p>
+				<input type="password" name="password"  id="lpasswrd" >
+
+				<input type="submit" class="sign-in" value="Sign In">
+
+			</form>
+		</div>
+		<div ></div>
+    </div>
+</div>
+
+</body>
+</html>

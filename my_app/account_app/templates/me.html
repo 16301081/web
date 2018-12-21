@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/me.css">
+    <title>profile page</title>
+
+      <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/bootstrap/js/bootstrap.min.js">
+      <script src="/static/bootstrap/js/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    {% load likes_tags %}
+</head>
+<body>
+<div class="background">
+        <div id="nav">
+         <ul>
+        <li><a href="{% url 'logout' %}">logout</a> </li>
+        <li><a href="{% url 'change_psw' %}">change_pwd</a></li>
+        <li><a href="{% url 'weibo_add' %}">weibo_add</a></li>
+       </ul>
+    </div>
+
+<div class="context">
+<div class="me">
+<div id="me">
+    <div id="head">
+    </div>
+        <h3 id="name">{{ text.username }}</h3>
+        <h4 id="email">{{ text.email }}</h4>
+
+</div>
+  <div id="search">
+        <form  action="{% url 'search_info' %}" method="post">
+            {% csrf_token %}
+
+                <input  name="searchBox" type="text"  id="search_name" maxlength="30" >
+
+            <button  type="submit" id="search_button">search</button>
+
+        </form >
+  </div>
+
+</div>
+
+  <div class="poster">
+        {% for weibo in weibos %}
+                <hr id="hr">
+                <h4>@{{ weibo.author }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ weibo.posted_date|date:"Y/m/d H:i" }}</h4>
+                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ weibo.content }}</h4>
+                <div class="like" onclick="likechange(this,{{ weibo.id }})">
+                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status weibo user %}"></span>
+                    <span class="liked-num">{% get_like_count weibo %}</span>
+
+                </div>
+                <p></p>
+                <form action="/me/" method="post">
+                    {% csrf_token %}
+                {% if text.username == weibo.author %}
+                    <button type="submit"  value={{ weibo.id }} name="delete" id="delete_button">delete</button>
+                {% endif %}
+                </form>
+               <p>&nbsp;</p>
+        {% endfor %}
+  </div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+            function likechange(obj,obj_id) {
+                var is_like =obj.getElementsByClassName('active').length==0
+                $.ajax({
+                    url:"{% url 'like_change'  %}",
+                    type:'Get',
+                    data:{
+                        obj_id:obj_id,
+                        is_like:is_like
+                    },
+                    cache:false,
+                    success:function (data) {
+                        console.log(data)
+                        if(data['status']=='SUCCESS'){
+                        // 更新点赞状态
+                        var element = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            element.addClass('active');
+                        }else{
+                            element.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        var liked_num = $(obj.getElementsByClassName('liked-num'));
+                        liked_num.text(data['liked_num']);
+                    }else{
+                        alert(data['message']);
+                    }
+                    },
+                    error:function (xhr) {
+                        console.log(xhr)
+                    }
+                });
+
+            }
+
+</script>
+</html>
+

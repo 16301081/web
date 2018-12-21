@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>result</title>
+     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/bootstrap/js/bootstrap.min.js">
+      <script src="/static/bootstrap/js/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/result.css">
+    {% load likes_tags %}
+</head>
+<body class="background">
+<div class="context">
+
+        <div id="return">
+            <a href="{% url 'me' %}" style=" text-decoration:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+
+    {% for weibo in info %}
+
+            <hr id="hr">
+             <h4>@{{ weibo.author }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ weibo.posted_date|date:"Y/m/d H:i" }}</h4>
+                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ weibo.content }}</h4>
+
+            <div class="like" onclick="likechange(this,{{ weibo.id }})">
+                <span class="glyphicon glyphicon-thumbs-up {% get_like_status weibo user %}"></span>
+                <span class="liked-num">{% get_like_count weibo %}</span>
+            </div>
+{#            <form action="/me/" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% if text.username == weibo.author %}#}
+{#                    {% if 1 == 1 %}#}
+{#                <button type="submit"  value={{ weibo.id }} name="delete" id="delete_button">delete</button>#}
+{#            {% endif %}#}
+{#            </form>#}
+            <p>&nbsp;</p>
+
+    {% empty %}
+        {% if error_msg %}
+            <p>{{ error_msg }}</p>
+        {% else  %}
+        <div  id="err">
+           Did not find the author's post. Maybe the author  did not exist or the author had not sent a post.
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+</body>
+
+<script type="text/javascript">
+            function likechange(obj,obj_id) {
+                var is_like =obj.getElementsByClassName('active').length==0
+                $.ajax({
+                    url:"{% url 'like_change'  %}",
+                    type:'Get',
+                    data:{
+                        obj_id:obj_id,
+                        is_like:is_like
+                    },
+                    cache:false,
+                    success:function (data) {
+                        console.log(data)
+                        if(data['status']=='SUCCESS'){
+                        // 更新点赞状态
+                        var element = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            element.addClass('active');
+                        }else{
+                            element.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        var liked_num = $(obj.getElementsByClassName('liked-num'));
+                        liked_num.text(data['liked_num']);
+                    }else{
+                        alert(data['message']);
+                    }
+                    },
+                    error:function (xhr) {
+                        console.log(xhr)
+                    }
+                });
+            }
+</script>
+</html>

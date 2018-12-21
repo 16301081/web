@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/weibo_add.css">
+</head>
+
+
+<body>
+    <div class="background">
+        <div id="return">
+            <a href="{% url 'me' %}" style=" text-decoration:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+             <div class="weibo_add">
+                {{ invalid }}
+            <form action="" method="POST" >
+            {% csrf_token %}<br />
+             {#            {{ form.as_p }}#}
+{#            <input type="text" name="content" id="poster" maxlength="300"/>#}
+                <textarea name="content" placeholder="write your post here" id="poster" maxlength="300"></textarea>
+            <input type="submit" value="submit" id="submit_button" />
+    </form>
+             </div>
+    </div>
+</body>
+</html>

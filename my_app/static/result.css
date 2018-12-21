@@ -1,0 +1,69 @@
+.background {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #999;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    background-image: url('2.jpg') ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+.context{
+     width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+.info{
+    width: 100%;
+    height: 100%;
+   overflow:auto;
+}
+
+#err{
+    font-size: 20px;
+    color: #b78c4b;
+    position:absolute;
+    left:20%;
+    top:20%;
+    border: 2px solid #b78c4b;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+
+
+}
+#hr{
+    border: 1px solid #b78c4b;
+
+}
+#return{
+    background-image: url('ico3.png');
+    height: 20px;
+    width: 30px;
+    position: absolute;
+    left:5px;
+    top:10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/*#delete_button{*/
+    /*position: absolute;*/
+    /*left:80%;*/
+    /*background-color: #45a8e2;*/
+    /*width: fit-content;*/
+    /*height: fit-content;*/
+/*}*/
+/*.poster{*/
+	/*width: 100%;*/
+    /*height: 420px;*/
+    /*border: 2px solid black ;*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 130px;*/
+    /*overflow:auto;*/
+/*}*/

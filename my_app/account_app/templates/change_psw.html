@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>profile page</title>
+    <script rel="javascript"  src="/static/judge.js"></script>
+    <link rel="stylesheet" href="/static/change_pwd.css">
+</head>
+<body>
+   <div class="background">
+
+         <div id="return">
+            <a href="{% url 'me' %}" style=" text-decoration:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+
+   <div class="change_pwd">
+        <h2>Change password</h2>
+            <div class="check_pwd">
+            {% if form.invalid %}
+                <p>{{ form.invalid }}</p>
+            {% endif %}
+        {{ invalid }}
+         </div>
+        <h3>{{ text.username }}</h3>
+        <form action="" method="POST" onsubmit="return p_judge()">
+            {% csrf_token %}<br />
+
+{#            {{ form.as_p }}#}
+
+            <p class="input_info1">old  password: <p>
+            <input type="password" name="old_password" required=""  class="input_info2" id="id_old_password">
+                  <p class="input_info3">new password: <p>
+            <input type="password" name="password" required=""  class="input_info4" id="id_password">
+                       <p class="input_info5">password confirmation: <p>
+            <input type="password" name="password_confirmation" required="" class="input_info6" id="id_password_confirmation">
+
+
+            <input type="submit" value="submit" id="submit_button"  />
+        </form>
+   </div>
+
+   </div>
+</body>
+</html>
